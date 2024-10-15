@@ -6,51 +6,58 @@ import pro.sky.skyproemployeebook.Exceptions.EmployeeAlreadyAddedException;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeNotFoundException;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeStorageIsFullException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
     private static final int DEFAULT_CAPACITY = 7;
-    private static final List<Employee> employeesList = new ArrayList<>(DEFAULT_CAPACITY);
-
+    private static final Map<Employee, Integer> employeesMap = new HashMap<>(DEFAULT_CAPACITY);
+    private static int employeeId = 0;
 
     @Override
-    public Employee add(Employee employee) throws
+    public Employee add(String firstName, String lastName) throws
             EmployeeStorageIsFullException,
             EmployeeAlreadyAddedException {
 
-        if (employeesList.size() >= DEFAULT_CAPACITY) {
+        if (employeesMap.size() >= DEFAULT_CAPACITY) {
             throw new EmployeeStorageIsFullException();
         }
+        Employee employee = new Employee(firstName, lastName);
 
-        if (employeesList.contains(employee)) {
+        if (employeesMap.containsKey(employee)) {
             throw new EmployeeAlreadyAddedException();
         }
 
-        employeesList.add(employee);
+
+        employeesMap.put(employee, employeeId);
+        employeeId++;
         return employee;
     }
 
     @Override
-    public Employee remove(Employee employee) throws EmployeeNotFoundException {
-        find(employee);
-        employeesList.remove(employee);
+    public Employee remove(String firstName, String lastName) throws EmployeeNotFoundException {
+        Employee employee = new Employee(firstName, lastName);
+
+        if (!employeesMap.containsKey(employee)) {
+            throw new EmployeeNotFoundException();
+        }
+        employeesMap.remove(employee);
         return employee;
     }
 
     @Override
-    public Employee find(Employee employee) throws EmployeeNotFoundException {
-        if (!employeesList.contains(employee)) {
+    public Employee find(String firstName, String lastName) throws EmployeeNotFoundException {
+        Employee employee = new Employee(firstName, lastName);
+
+        if (!employeesMap.containsKey(employee)) {
             throw new EmployeeNotFoundException();
         }
         return employee;
     }
 
     @Override
-    public List<Employee> printEmployeeList() {
-        return Collections.unmodifiableList(employeesList);
+    public Collection<Map.Entry<Employee, Integer>> printEmployees() {
+        return Collections.unmodifiableCollection(employeesMap.entrySet());
     }
 }
 

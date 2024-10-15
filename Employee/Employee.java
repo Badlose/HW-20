@@ -5,10 +5,15 @@ import java.util.Objects;
 public class Employee {
     private final String employeeFirstName;
     private final String employeeLastName;
+//    private final int employeeId;
+//    private static int counter = 0;
+
 
     public Employee(String employeeFirstNAme, String employeeLastNAme) {
         this.employeeFirstName = employeeFirstNAme;
         this.employeeLastName = employeeLastNAme;
+//        this.employeeId = counter;
+//        counter++;
     }
 
     public String getEmployeeFirstName() {
@@ -19,11 +24,16 @@ public class Employee {
         return employeeLastName;
     }
 
+//    public int getEmployeeId() {
+//        return employeeId;
+//    }
+
     @Override
     public String toString() {
         return "Employee{" +
                 "employeeFirstNAme='" + employeeFirstName + '\'' +
                 ", employeeLastNAme='" + employeeLastName + '\'' +
+//                ", employeeId='" + employeeId + '\'' +
                 '}';
     }
 

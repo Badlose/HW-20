@@ -5,15 +5,16 @@ import pro.sky.skyproemployeebook.Exceptions.EmployeeAlreadyAddedException;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeNotFoundException;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeStorageIsFullException;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
 public interface EmployeeService {
 
-    Employee add(Employee employee) throws EmployeeStorageIsFullException, EmployeeAlreadyAddedException;
+    Employee add(String firstName, String lastName) throws EmployeeStorageIsFullException, EmployeeAlreadyAddedException;
 
-    Employee remove(Employee employee) throws EmployeeNotFoundException;
+    Employee remove(String firstName, String lastName) throws EmployeeNotFoundException;
 
-    Employee find(Employee employee) throws EmployeeNotFoundException;
+    Employee find(String firstName, String lastName) throws EmployeeNotFoundException;
 
-    List<Employee> printEmployeeList();
+    Collection<Map.Entry<Employee, Integer>> printEmployees();
 }
