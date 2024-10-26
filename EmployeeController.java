@@ -2,10 +2,7 @@ package pro.sky.skyproemployeebook;
 
 import org.springframework.web.bind.annotation.*;
 import pro.sky.skyproemployeebook.Employee.Employee;
-import pro.sky.skyproemployeebook.Service.EmployeeService;
-
-import java.util.Collection;
-import java.util.Map;
+import pro.sky.skyproemployeebook.EmployeeService.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")
@@ -17,30 +14,30 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public Collection<Map.Entry<Employee, Integer>> printEmployeeList() {
+    public Iterable<Employee> printEmployeeList() {
         return employeeService.printEmployees();
     }
 
 
     @GetMapping(path = "/add")
     public Employee add(@RequestParam(value = "firstName", required = false) String firstName,
-                        @RequestParam(value = "lastName", required = false) String lastName) {
+                        @RequestParam(value = "lastName", required = false) String lastName,
+                        @RequestParam(value = "department", required = false) int department,
+                        @RequestParam(value = "salary", required = false) int salary) {
 
-        return employeeService.add(firstName, lastName);
+        return employeeService.add(firstName, lastName, department, salary);
     }
 
 
     @GetMapping(path = "/remove")
-    public Employee remove(@RequestParam(value = "firstName", required = false) String firstName,
-                           @RequestParam(value = "lastName", required = false) String lastName) {
+    public Employee remove(@RequestParam(value = "id", required = false) int id) {
 
-        return employeeService.remove(firstName, lastName);
+        return employeeService.remove(id);
     }
 
     @GetMapping(path = "/find")
-    public Employee find(@RequestParam(value = "firstName", required = false) String firstName,
-                         @RequestParam(value = "lastName", required = false) String lastName) {
+    public Employee find(@RequestParam(value = "id", required = false) int id) {
 
-        return employeeService.find(firstName, lastName);
+        return employeeService.find(id);
     }
 }
