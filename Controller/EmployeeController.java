@@ -1,8 +1,8 @@
-package pro.sky.skyproemployeebook;
+package pro.sky.skyproemployeebook.Controller;
 
 import org.springframework.web.bind.annotation.*;
-import pro.sky.skyproemployeebook.Employee.Employee;
-import pro.sky.skyproemployeebook.EmployeeService.EmployeeService;
+import pro.sky.skyproemployeebook.Model.Employee;
+import pro.sky.skyproemployeebook.Service.EmployeeService;
 
 @RestController
 @RequestMapping("/employee")

@@ -1,12 +1,15 @@
-package pro.sky.skyproemployeebook.DepartmentService;
+package pro.sky.skyproemployeebook.Service.Impl;
 
 import org.springframework.stereotype.Service;
-import pro.sky.skyproemployeebook.Employee.Employee;
-import pro.sky.skyproemployeebook.EmployeeService.EmployeeService;
+import pro.sky.skyproemployeebook.Service.DepartmentService;
+import pro.sky.skyproemployeebook.Model.Employee;
+import pro.sky.skyproemployeebook.Service.EmployeeService;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -42,32 +45,31 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Employee> getEmployeeByDept(String deptId) {
+    public List<Employee> getEmployeeByDept(int deptId) {
         return employeeService.getAll().stream()
-                .filter(e -> e.getDepartmentId() == Integer.parseInt(deptId))
+                .filter(e -> e.getDepartmentId() == deptId)
                 .toList();
     }
 
     @Override
-    public List<Employee> getEmployeeSortedByDept() {
+    public Employee getMinSalaryEmployeeByDept(int deptId) {
         return employeeService.getAll().stream()
-                .sorted(Comparator.comparing(Employee::getDepartmentId))
-                .toList();
+                .filter(e -> e.getDepartmentId() == deptId)
+                .min(Comparator.comparingInt(Employee::getSalary))
+                .orElse(null);
     }
 
     @Override
-    public Optional<Employee> getMaxSalaryEmployeeByDept(Integer deptId) {
+    public Employee getMaxSalaryEmployeeByDept(int deptId) {
         return employeeService.getAll().stream()
                 .filter(e -> e.getDepartmentId() == deptId)
-                .max(Comparator.comparingInt(Employee::getSalary));
+                .max(Comparator.comparingInt(Employee::getSalary))
+                .orElse(null);
     }
 
     @Override
-    public Optional<Employee> getMinSalaryEmployeeByDept(Integer deptId) {
+    public Map<Integer, List<Employee>> getAllEmployeesGroupedByDeptId() {
         return employeeService.getAll().stream()
-                .filter(e -> e.getDepartmentId() == deptId)
-                .min(Comparator.comparingInt(Employee::getSalary));
+                .collect(Collectors.groupingBy(Employee::getSalary));
     }
-
 }
-

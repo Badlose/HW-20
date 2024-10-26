@@ -1,10 +1,11 @@
-package pro.sky.skyproemployeebook.EmployeeService;
+package pro.sky.skyproemployeebook.Service.Impl;
 
 import org.springframework.stereotype.Service;
-import pro.sky.skyproemployeebook.Employee.Employee;
+import pro.sky.skyproemployeebook.Model.Employee;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeAlreadyAddedException;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeNotFoundException;
 import pro.sky.skyproemployeebook.Exceptions.EmployeeStorageIsFullException;
+import pro.sky.skyproemployeebook.Service.EmployeeService;
 
 import java.util.*;
 
