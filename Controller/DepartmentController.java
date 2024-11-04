@@ -9,7 +9,6 @@ import pro.sky.skyproemployeebook.Model.Employee;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/departments")
@@ -31,12 +30,12 @@ public class DepartmentController {
     }
 
     @RequestMapping("/max")
-    public Optional<Employee> maxSalary() {
+    public Employee maxSalary() {
         return departmentService.getMaxSalary();
     }
 
     @RequestMapping("/min")
-    public Optional<Employee> minSalary() {
+    public Employee minSalary() {
         return departmentService.getMinSalary();
     }
 

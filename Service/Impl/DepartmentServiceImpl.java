@@ -8,7 +8,6 @@ import pro.sky.skyproemployeebook.Service.EmployeeService;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,15 +32,17 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Optional<Employee> getMaxSalary() {
+    public Employee getMaxSalary() {
         return employeeService.getAll().stream()
-                .max(Comparator.comparing(Employee::getSalary));
+                .max(Comparator.comparing(Employee::getSalary))
+                .orElse(null);
     }
 
     @Override
-    public Optional<Employee> getMinSalary() {
+    public Employee getMinSalary() {
         return employeeService.getAll().stream()
-                .min(Comparator.comparing(Employee::getSalary));
+                .min(Comparator.comparing(Employee::getSalary))
+                .orElse(null);
     }
 
     @Override

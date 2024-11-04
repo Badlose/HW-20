@@ -4,16 +4,15 @@ import pro.sky.skyproemployeebook.Model.Employee;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 public interface DepartmentService {
     int getSalarySum();
 
     long getTotalEmployees();
 
-    Optional<Employee> getMaxSalary();
+    Employee getMaxSalary();
 
-    Optional<Employee> getMinSalary();
+    Employee getMinSalary();
 
     List<Employee> getEmployeeByDept(int deptId);
 
