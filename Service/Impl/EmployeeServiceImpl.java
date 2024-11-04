@@ -1,7 +1,6 @@
 package pro.sky.skyproemployeebook.Service.Impl;
 
 import jakarta.annotation.PostConstruct;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import pro.sky.skyproemployeebook.Exceptions.IncorrectEmployeeNameException;
 import pro.sky.skyproemployeebook.Model.Employee;
@@ -11,6 +10,8 @@ import pro.sky.skyproemployeebook.Exceptions.EmployeeStorageIsFullException;
 import pro.sky.skyproemployeebook.Service.EmployeeService;
 
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -39,29 +40,20 @@ public class EmployeeServiceImpl implements EmployeeService {
             throw new EmployeeStorageIsFullException();
         }
 
-        Employee employee;
+        checkName(firstName, lastName);
 
-
-        firstName = StringUtils.capitalize(StringUtils.trim(firstName));
-        lastName = StringUtils.capitalize(StringUtils.trim(lastName));
-
-        if (checkName(firstName) && checkName(lastName)) {
-
-            employee = new Employee(
-                    firstName,
-                    lastName,
-                    department,
-                    salary);
-        } else {
-            throw new IncorrectEmployeeNameException();
-        }
+        Employee employee = new Employee(
+                firstName,
+                lastName,
+                department,
+                salary);
 
         if (employeesMap.containsValue(employee)) {
             throw new EmployeeAlreadyAddedException();
         }
 
 
-        if (StringUtils.isNotBlank(firstName) && StringUtils.isNotBlank(lastName)) {
+        if (isNotBlank(firstName) && isNotBlank(lastName)) {
             employeesMap.put(employeeId, employee);
         }
 
@@ -69,8 +61,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employee;
     }
 
-    private static boolean checkName(String string) {
-        return StringUtils.containsOnly(string, "abcdefijklmnopqrstuvwxyzABCDEFIJKLMNOPQRSTUVWXYZ".toCharArray());
+    private void checkName(String firstName, String lastName) {
+        if (!(isAlpha(firstName) && isAlpha(lastName))) {
+            throw new IncorrectEmployeeNameException();
+        }
     }
 
     @Override

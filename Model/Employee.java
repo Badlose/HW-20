@@ -2,6 +2,8 @@ package pro.sky.skyproemployeebook.Model;
 
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 public class Employee {
     private final String employeeFirstName;
     private final String employeeLastName;
@@ -9,8 +11,8 @@ public class Employee {
     private  int salary;
 
     public Employee(String employeeFirstNAme, String employeeLastNAme, int department, int salary) {
-        this.employeeFirstName = employeeFirstNAme;
-        this.employeeLastName = employeeLastNAme;
+        this.employeeFirstName = trim(capitalize(employeeFirstNAme.toLowerCase()));
+        this.employeeLastName = trim(capitalize(employeeLastNAme.toLowerCase()));
         if (department <= 0 || department >= 6) {
             throw new IllegalArgumentException("Введен неверный отдел");
         } else {
